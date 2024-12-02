@@ -1,0 +1,6 @@
+[workspace]
+resolver = "2"
+members = [
+    "runner",
+    "emojifier", "advent_of_code",
+]
