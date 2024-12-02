@@ -94,26 +94,26 @@ mod tests {
 
     #[test]
     fn part1example() {
-        let example_input = include_str!("day2exampleinput.txt");
+        let example_input = include_str!("day2input.example");
         assert_eq!(part1solution(example_input), 2);
     }
 
     #[test]
     fn part1real() {
-        let real_input = include_str!("day2realinput.txt");
+        let real_input = include_str!("day2input.real");
         println!("{}", part1solution(real_input));
         assert_eq!(part1solution(real_input), 402);
     }
 
     #[test]
     fn part2example() {
-        let example_input = include_str!("day2exampleinput.txt");
+        let example_input = include_str!("day2input.example");
         assert_eq!(part2solution(example_input), 4);
     }
 
     #[test]
     fn part2real() {
-        let real_input = include_str!("day2realinput.txt");
+        let real_input = include_str!("day2input.real");
         println!("{}", part2solution(real_input));
         assert_eq!(part2solution(real_input), 455);
     }

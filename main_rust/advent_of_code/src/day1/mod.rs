@@ -54,7 +54,7 @@ mod tests {
 
     #[test]
     fn part1real() {
-        let real_input = include_str!("day1input.txt");
+        let real_input = include_str!("day1input.real");
         assert_eq!(part1solution(real_input), 2742123);
     }
 
@@ -71,7 +71,7 @@ mod tests {
 
     #[test]
     fn part2real() {
-        let real_input = include_str!("day1input.txt");
+        let real_input = include_str!("day1input.real");
         println!("{}", part2solution(real_input));
         assert_eq!(part2solution(real_input), 21328497);
     }
