@@ -1,6 +1,7 @@
 mod daytemplate;
 mod day1;
 mod day2;
+mod day3;
 
 pub fn add(left: u64, right: u64) -> u64 {
     left + right
