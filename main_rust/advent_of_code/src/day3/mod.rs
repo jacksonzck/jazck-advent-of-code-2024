@@ -14,18 +14,15 @@ fn part1solution(input: &str) -> i32 {
 
 fn part2solution(input: &str) -> i32 {
     let re = Regex::new(r"(?:mul\((\d+),(\d+)\))|(?:(do\(\))())|(?:(don't\(\))())").unwrap();
-    //let mut results = vec![];
     let mut sum = 0;
     let mut doo = true;
     for (_, [first_operand, second_operand]) in re.captures_iter(input).map(|c| c.extract()) {
-        //results.push((first_operand.parse::<i32>(), second_operand.parse::<u64>().unwrap_or(continue), line));
         if first_operand == "do()" {doo = true}
         else if first_operand == "don't()" {doo = false} 
         else if doo {   
             sum += first_operand.parse::<i32>().unwrap() * second_operand.parse::<i32>().unwrap();
         }
     }
-    //println!("{:#?}", results);
     sum
 }
 
