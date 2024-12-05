@@ -1,7 +1,10 @@
+#![allow(dead_code)]
+#![allow(unreachable_code)]
 mod day1;
 mod day2;
 mod day3;
 mod day4;
+mod day5;
 
 pub fn add(left: u64, right: u64) -> u64 {
     left + right

@@ -8,18 +8,18 @@ fn part1solution(input: &str) -> i32 {
         levels.push(level);
     }
     let mut num_safe_levels = 0;
-    for mut og_level in levels.into_iter().filter(|level| !level.is_empty()) {
+    for og_level in levels.into_iter().filter(|level| !level.is_empty()) {
         //println!("{:#?}", og_level);
         let mut level = og_level.clone();
         let mut safe = true;
-        let mut first = level.pop().unwrap();
+        let first = level.pop().unwrap();
         let mut last = level.pop().unwrap();
         let increasing = first > last;
         if (first - last).abs() > 3 || first - last == 0 {
             safe = false;
         }
         while !level.is_empty() {
-            let mut new = level.pop().unwrap();
+            let new = level.pop().unwrap();
             if increasing && last < new {
                 safe = false;
             } else if !increasing && last > new {
@@ -50,14 +50,14 @@ fn part2solution(input: &str) -> i32 {
     fn is_safe_sublevel(og_level: Vec<i32>) -> bool {
         let mut level = og_level.clone();
         let mut safe = true;
-        let mut first = level.pop().unwrap();
+        let first = level.pop().unwrap();
         let mut last = level.pop().unwrap();
         let increasing = first > last;
         if (first - last).abs() > 3 || first - last == 0 {
             safe = false;
         }
         while !level.is_empty() {
-            let mut new = level.pop().unwrap();
+            let new = level.pop().unwrap();
             if increasing && last < new {
                 safe = false;
             } else if !increasing && last > new {
@@ -70,7 +70,7 @@ fn part2solution(input: &str) -> i32 {
         }
         safe
     }
-    for mut og_level in levels.into_iter().filter(|level| !level.is_empty()) {
+    for og_level in levels.into_iter().filter(|level| !level.is_empty()) {
         let mut is_safe = false;
         for index in 0..og_level.len() {
             let mut sublevel = og_level.clone();

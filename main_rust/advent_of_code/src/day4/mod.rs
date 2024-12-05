@@ -33,17 +33,17 @@ fn part1solution(input: &str) -> usize {
         }
     }*/
     let line_length = input.split_whitespace().into_iter().collect::<Vec<&str>>().get(0).unwrap().len();
-    let binding = (".{".to_owned() + (line_length - 1).to_string().as_str() + "}");
+    let binding = ".{".to_owned() + (line_length - 1).to_string().as_str() + "}";
     let down_left_char = binding.as_str();
-    let binding = (".{".to_owned() + (line_length - 0).to_string().as_str() + "}");
+    let binding = ".{".to_owned() + (line_length - 0).to_string().as_str() + "}";
     let down_char = binding.as_str();
-    let binding = (".{".to_owned() + (line_length + 1).to_string().as_str() + "}");
+    let binding = ".{".to_owned() + (line_length + 1).to_string().as_str() + "}";
     let down_right_char = binding.as_str();
     let forwards = Regex::new(r"XMAS").unwrap();
     let diagonal_up = Regex::new((r"S".to_owned() + down_left_char + "A" + down_left_char + "M" + down_left_char + "X").as_str()).unwrap();
     let up = Regex::new((r"S".to_owned() + down_char + "A" + down_char + "M" + down_char + "X").as_str()).unwrap();
     let diagonal_up_left = Regex::new((r"S".to_owned() + down_right_char + "A" + down_right_char + "M" + down_right_char + "X").as_str()).unwrap();
-    let backwards = Regex::new((r"SAMX")).unwrap();
+    let backwards = Regex::new(r"SAMX").unwrap();
     let diagonal_down = Regex::new((r"X".to_owned() + down_right_char + "M" + down_right_char + "A" + down_right_char + "S").as_str()).unwrap();
     let down = Regex::new((r"X".to_owned() + down_char + "M" + down_char + "A" + down_char + "S").as_str()).unwrap();
     let diagonal_down_other = Regex::new((r"X".to_owned() + down_left_char + "M" + down_left_char + "A" + down_left_char + "S").as_str()).unwrap();
@@ -64,12 +64,12 @@ fn part1solution(input: &str) -> usize {
 
 fn part2solution(input: &str) -> i32 {
     let line_length = input.split_whitespace().into_iter().collect::<Vec<&str>>().get(0).unwrap().len();
-    let binding = (".{".to_owned() + (line_length - 1).to_string().as_str() + "}");
+    let binding = ".{".to_owned() + (line_length - 1).to_string().as_str() + "}";
     let down_left_char = binding.as_str();
-    let binding = (".{".to_owned() + (line_length - 0).to_string().as_str() + "}");
-    let down_char = binding.as_str();
-    let binding = (".{".to_owned() + (line_length + 1).to_string().as_str() + "}");
-    let down_right_char = binding.as_str();
+    let binding = ".{".to_owned() + (line_length - 0).to_string().as_str() + "}";
+    let _down_char = binding.as_str();
+    let binding = ".{".to_owned() + (line_length + 1).to_string().as_str() + "}";
+    let _down_right_char = binding.as_str();
     println!("{}", down_left_char);
     let a = Regex::new((r"M.M".to_owned() + down_left_char + "A" + down_left_char + "S.S").as_str()).unwrap();
     let b = Regex::new((r"M.S".to_owned() + down_left_char + "A" + down_left_char + "M.S").as_str()).unwrap();
