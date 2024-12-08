@@ -6,6 +6,7 @@ mod day3;
 mod day4;
 mod day5;
 mod day6;
+mod day7;
 mod day8;
 
 pub fn add(left: u64, right: u64) -> u64 {
