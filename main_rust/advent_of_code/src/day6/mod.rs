@@ -1,22 +1,22 @@
-use std::collections::HashSet;
-
+use std::{collections::HashSet, thread};
+use rayon::prelude::*;
 #[derive(PartialEq, Eq, Hash, Clone, Copy, Debug)]
 struct Location {
     x: usize,
-    y: usize
+    y: usize,
 }
 #[derive(Clone, Copy, PartialEq, Eq, Hash)]
 enum Direction {
     NORTH,
     EAST,
     SOUTH,
-    WEST
+    WEST,
 }
 
 #[derive(Clone, Copy, PartialEq, Eq, Hash)]
 struct Guard {
     location: Location,
-    direction: Direction
+    direction: Direction,
 }
 
 impl Guard {
@@ -26,17 +26,50 @@ impl Guard {
             Direction::EAST => (self.location.x + 1, self.location.y),
             Direction::SOUTH => (self.location.x, self.location.y + 1),
             Direction::WEST if self.location.x > 0 => (self.location.x - 1, self.location.y),
-            _ => return None
+            _ => return None,
         };
-        match map.get(move_try_y).and_then(|e: &Vec<Cell>| e.get(move_try_x)) {
-            Some(Cell::EMPTY) => Some(Guard {location: Location {x: move_try_x, y: move_try_y}, direction: self.direction}),
+        match map
+            .get(move_try_y)
+            .and_then(|e: &Vec<Cell>| e.get(move_try_x))
+        {
+            Some(Cell::EMPTY) => Some(Guard {
+                location: Location {
+                    x: move_try_x,
+                    y: move_try_y,
+                },
+                direction: self.direction,
+            }),
             Some(Cell::WALL) => match self.direction {
-                Direction::NORTH => Some(Guard {location: Location {x: self.location.x, y: self.location.y}, direction: Direction::EAST}),
-                Direction::EAST => Some(Guard {location: Location {x: self.location.x, y: self.location.y}, direction: Direction::SOUTH}),
-                Direction::SOUTH => Some(Guard {location: Location {x: self.location.x, y: self.location.y}, direction: Direction::WEST}),
-                Direction::WEST => Some(Guard {location: Location {x: self.location.x, y: self.location.y}, direction: Direction::NORTH}),
-            }
-            None => None
+                Direction::NORTH => Some(Guard {
+                    location: Location {
+                        x: self.location.x,
+                        y: self.location.y,
+                    },
+                    direction: Direction::EAST,
+                }),
+                Direction::EAST => Some(Guard {
+                    location: Location {
+                        x: self.location.x,
+                        y: self.location.y,
+                    },
+                    direction: Direction::SOUTH,
+                }),
+                Direction::SOUTH => Some(Guard {
+                    location: Location {
+                        x: self.location.x,
+                        y: self.location.y,
+                    },
+                    direction: Direction::WEST,
+                }),
+                Direction::WEST => Some(Guard {
+                    location: Location {
+                        x: self.location.x,
+                        y: self.location.y,
+                    },
+                    direction: Direction::NORTH,
+                }),
+            },
+            None => None,
         }
     }
 }
@@ -44,7 +77,7 @@ impl Guard {
 #[derive(Debug, Clone, Copy, Eq, PartialEq)]
 enum Cell {
     WALL,
-    EMPTY
+    EMPTY,
 }
 
 fn part1solution(input: &str) -> usize {
@@ -57,10 +90,16 @@ fn part1solution(input: &str) -> usize {
                 '.' => Cell::EMPTY,
                 '#' => Cell::WALL,
                 '^' => {
-                    guard = Some(Guard {location: Location {x: character_number, y: line_number}, direction: Direction::NORTH});
+                    guard = Some(Guard {
+                        location: Location {
+                            x: character_number,
+                            y: line_number,
+                        },
+                        direction: Direction::NORTH,
+                    });
                     Cell::EMPTY
-                },
-                _ => panic!()
+                }
+                _ => panic!(),
             });
         }
         map.push(map_line);
@@ -83,10 +122,16 @@ fn find_visited_locations(input: &str) -> HashSet<Location> {
                 '.' => Cell::EMPTY,
                 '#' => Cell::WALL,
                 '^' => {
-                    guard = Some(Guard {location: Location {x: character_number, y: line_number}, direction: Direction::NORTH});
+                    guard = Some(Guard {
+                        location: Location {
+                            x: character_number,
+                            y: line_number,
+                        },
+                        direction: Direction::NORTH,
+                    });
                     Cell::EMPTY
-                },
-                _ => panic!()
+                }
+                _ => panic!(),
             });
         }
         map.push(map_line);
@@ -109,22 +154,35 @@ fn part2solution(input: &str) -> i32 {
                 '.' => Cell::EMPTY,
                 '#' => Cell::WALL,
                 '^' => {
-                    guard = Some(Guard {location: Location {x: character_number, y: line_number}, direction: Direction::NORTH});
+                    guard = Some(Guard {
+                        location: Location {
+                            x: character_number,
+                            y: line_number,
+                        },
+                        direction: Direction::NORTH,
+                    });
                     Cell::EMPTY
-                },
-                _ => panic!()
+                }
+                _ => panic!(),
             });
         }
         map.push(map_line);
     }
-    let guard_starting_position = Location {x: guard.unwrap().location.x, y: guard.unwrap().location.y};
+    let guard_starting_position = Location {
+        x: guard.unwrap().location.x,
+        y: guard.unwrap().location.y,
+    };
 
     let mut stuck_counts = 0;
     let default_visited_locations = find_visited_locations(input);
     for y in 0..map.len() {
         for x in 0..map[0].len() {
-            if (Location {x: x, y: y}) == guard_starting_position {continue}
-            if !default_visited_locations.contains(&(Location {x: x, y: y})) {continue}
+            if (Location { x: x, y: y }) == guard_starting_position {
+                continue;
+            }
+            if !default_visited_locations.contains(&(Location { x: x, y: y })) {
+                continue;
+            }
             let mut cooler_map = map.clone();
             if cooler_map[y][x] == Cell::WALL {
                 continue;
@@ -136,9 +194,9 @@ fn part2solution(input: &str) -> i32 {
             while cooler_guard.is_some() {
                 seen_guards.insert(cooler_guard.unwrap());
                 cooler_guard = cooler_guard.clone().unwrap().move_body(&cooler_map);
-                if cooler_guard.is_some_and(|cooler_guard | seen_guards.contains(&cooler_guard)) {
+                if cooler_guard.is_some_and(|cooler_guard| seen_guards.contains(&cooler_guard)) {
                     stuck_counts += 1;
-                    break
+                    break;
                 }
             }
         }
@@ -146,10 +204,36 @@ fn part2solution(input: &str) -> i32 {
     stuck_counts
 }
 
+fn part2solution_speeed(input: &str) -> usize {
+    let mut guard = None;
+    let mut map = vec![];
+    for (line_number, line) in input.split_whitespace().enumerate() {
+        let mut map_line = vec![];
+        for (character_number, character) in line.char_indices() {
+            map_line.push(match character {
+                '.' => Cell::EMPTY,
+                '#' => Cell::WALL,
+                '^' => {
+                    guard = Some(Guard {
+                        location: Location {
+                            x: character_number,
+                            y: line_number,
+                        },
+                        direction: Direction::NORTH,
+                    });
+                    Cell::EMPTY
+                }
+                _ => panic!(),
+            });
+        }
+        map.push(map_line);
+    }
+    0
+}
 
 #[cfg(test)]
 mod tests {
-    use crate::day6::{part1solution, part2solution};
+    use crate::day6::{part1solution, part2solution, part2solution_speeed};
 
     #[test]
     fn part1example() {
@@ -168,8 +252,18 @@ mod tests {
     }
 
     #[test]
+    fn part2examplefast() {
+        assert_eq!(part2solution_speeed(include_str!("day6input.example")), 6);
+    }
+
+    #[test]
+    fn part2realfaster() {
+        assert_eq!(part2solution_speeed(include_str!("day6input.real")), 1503);
+    }
+
+    #[test]
     fn part2real() {
-        println!("{}", part2solution(include_str!("day6input.real")));
+        //println!("{}", part2solution(include_str!("day6input.real")));
         assert_eq!(part2solution(include_str!("day6input.real")), 1503);
     }
 }
