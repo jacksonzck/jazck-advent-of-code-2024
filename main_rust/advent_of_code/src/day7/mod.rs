@@ -20,13 +20,13 @@ impl Operators {
 }
 
 #[derive(EnumIter, Debug, PartialEq)]
-enum Cooler_Operators {
+enum CoolerOperators {
     ADDITION,
     MULTIPLY,
     CONCATENATE
 }
 
-impl Cooler_Operators {
+impl CoolerOperators {
     fn apply(self, first: usize, next: usize) -> usize {
         match self {
             Self::ADDITION => first + next, 
@@ -43,9 +43,7 @@ fn part1solution(input: &str) -> usize {
         let mut results = vec![items[0]];
         for item in items[1..].into_iter() {
             let mut next_results = vec![];
-            for result in results.clone() {
-                next_results.extend(Operators::iter().map(|operator| operator.apply(result, *item)));
-            }
+            results.clone().iter().for_each(|result| next_results.extend(Operators::iter().map(|operator| operator.apply(*result, *item))));
             results = next_results;
         }
         (get_to, results)
@@ -59,7 +57,7 @@ fn part2solution(input: &str) -> usize {
         for item in items[1..].into_iter() {
             let mut next_results = vec![];
             for result in results.clone() {
-                next_results.extend(Cooler_Operators::iter().map(|operator| operator.apply(result, *item)));
+                next_results.extend(CoolerOperators::iter().map(|operator| operator.apply(result, *item)));
             }
             results = next_results;
         }
