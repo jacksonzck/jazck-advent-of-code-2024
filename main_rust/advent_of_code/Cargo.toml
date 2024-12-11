@@ -5,7 +5,20 @@ edition = "2021"
 
 [dependencies]
 itertools = "0.13.0"
+memoize = "0.4.2"
 rayon = "1.10.0"
 regex = "1.11.1"
 strum = "0.26.3"
 strum_macros = "0.26.4"
+
+[profile.test]
+opt-level = 3              # Use slightly better optimizations.
+overflow-checks = false     # Disable integer overflow checks.
+
+[profile.dev]
+opt-level = 3               # Use slightly better optimizations.
+overflow-checks = false     # Disable integer overflow checks.
+
+[profile.bench]
+opt-level = 3               # Use slightly better optimizations.
+overflow-checks = false     # Disable integer overflow checks.

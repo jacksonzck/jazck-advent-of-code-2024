@@ -1,8 +1,5 @@
-use emojifier::e;
+use advent_of_code;
 
-
-e!(
-    fn main() {
-        
-    }
-);
+fn main {
+    
+}

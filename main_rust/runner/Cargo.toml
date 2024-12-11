@@ -5,4 +5,5 @@ edition = "2021"
 
 [dependencies]
 emojifier = { path = "../emojifier" }
+advent_of_code = { path = "../advent_of_code" }
 rayon = "1.10.0"
