@@ -28,7 +28,6 @@ fn part2solution(input: &str) -> usize {
     let re = Regex::new(r"Button A\: X\+([0-9]+), Y\+([0-9]+)\nButton B\: X\+([0-9]+), Y\+([0-9]+)\nPrize\: X\=([0-9]+), Y\=([0-9]+)").unwrap();
     let mut total_sum = 0;
     for (a_x, a_y, b_x, b_y, prize_x, prize_y) in re.captures_iter(input).map(|c| c.extract().1).map(|captives: [&str; 6]| captives.iter().map(|captive| captive.parse::<f64>().unwrap()).collect_tuple().unwrap()) {
-        // PRIZE = iA + jB
         let mat1 = Matrix2::new(a_x, a_y, b_x, b_y);
         let res = matrix![prize_x + 10000000000000.0, prize_y + 10000000000000.0] * mat1.try_inverse().unwrap(); 
         let Some(a) = try_usize(res[0]) else {continue;};
