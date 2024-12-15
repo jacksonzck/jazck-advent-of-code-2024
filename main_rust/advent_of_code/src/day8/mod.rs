@@ -1,5 +1,5 @@
 use std::collections::HashSet;
-use itertools::{Combinations, Itertools};
+use itertools::{Itertools};
 
 #[derive(PartialEq, Eq, Hash, Clone, Copy, Debug)]
 struct Antenna {

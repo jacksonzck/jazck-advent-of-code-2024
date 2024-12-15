@@ -73,7 +73,7 @@ impl Region {
         perimeter * self.plants.len()
     }
 
-    fn calculate_cost_cool(self, garden: &Vec<Vec<Plant>>) -> usize {
+    fn calculate_cost_cool(self, _garden: &Vec<Vec<Plant>>) -> usize {
         todo!()
     }
 }
@@ -107,7 +107,7 @@ fn part1solution(input: &str) -> usize {
     regions.iter().map(|region| region.clone().calculate_cost(&garden)).sum()
     //todo!()
 }
-fn part2solution(input: &str) -> usize {
+fn part2solution(_input: &str) -> usize {
     todo!()
 }
 #[cfg(test)]

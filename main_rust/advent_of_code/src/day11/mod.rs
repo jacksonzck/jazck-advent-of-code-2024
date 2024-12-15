@@ -1,4 +1,4 @@
-use std::{sync::LazyLock, usize};
+use std::usize;
 
 use memoize::memoize;
 use rayon::iter::{IntoParallelRefIterator, ParallelIterator};

@@ -1,7 +1,6 @@
 use itertools::Itertools;
 use rayon::iter::{IntoParallelIterator, ParallelIterator};
 use regex::Regex;
-use std::fs::File;
 use std::io;
 use std::io::prelude::*;
 fn pause() {
@@ -70,7 +69,7 @@ fn part2solution(input: &str, width: usize, height: usize) {
             for (pos_x, pos_y, v_x, v_y) in re.captures_iter(input).map(|c| c.extract().1).map(|captives: [&str; 4]| captives.iter().map(|captive| captive.parse::<i64>().unwrap()).collect_tuple().unwrap()) {
                 spots[((pos_y + (v_y * i))).rem_euclid(height as i64) as usize][((pos_x + (v_x * i))).rem_euclid(width as i64) as usize] += 1;
             }
-            for (rownum, row) in spots.iter().enumerate() {
+            for (_rownum, row) in spots.iter().enumerate() {
                 let mut wow = vec![0; width];
                 for (colnum, col) in row.iter().enumerate() {
                     if *col > 0 {
@@ -99,13 +98,15 @@ fn part2solution(input: &str, width: usize, height: usize) {
 
 fn part2solution_regex(input: &str, width: usize, height: usize) {
     let re = Regex::new(r"p\=([0-9]+)\,([0-9]+) v\=(-?[0-9]+),(-?[0-9]+)").unwrap();
-    let ore = Regex::new(r"^0*(?:[1-9]+0+)*$").unwrap();
+    let _ore = Regex::new(r"^0*(?:[1-9]+0+)*$").unwrap();
     (0..9999).into_par_iter().for_each(|i| {
         {
             let mut spots: Vec<Vec<i64>> = vec![vec![0; width]; height];
             for (pos_x, pos_y, v_x, v_y) in re.captures_iter(input).map(|c| c.extract().1).map(|captives: [&str; 4]| captives.iter().map(|captive| captive.parse::<i64>().unwrap()).collect_tuple().unwrap()) {
                 spots[((pos_y + (v_y * i))).rem_euclid(height as i64) as usize][((pos_x + (v_x * i))).rem_euclid(width as i64) as usize] += 1;
             }
+            todo!();
+            /* 
             //println!("{}", spots.iter().map(|f| f.into_iter().join("")).join("\n"));
             //if spots.iter().map(|f| f.into_iter().join("")).any(|f| !ore.is_match(&f)) {
             //    return;
@@ -131,11 +132,8 @@ fn part2solution_regex(input: &str, width: usize, height: usize) {
             //println!();
             //file.write("\n".as_bytes()).unwrap();
             }
-            if cool_second {
-                println!("Second {}:", i);
-                println!("{}", spots.iter().map(|f| f.into_iter().join("")).join("\n"));
-            }
-            //pause();
+            todo!()
+            //pause();*/
         } 
     }); 
 }

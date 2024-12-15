@@ -1,5 +1,4 @@
-use std::{collections::HashSet, thread};
-use rayon::prelude::*;
+use std::collections::HashSet;
 #[derive(PartialEq, Eq, Hash, Clone, Copy, Debug)]
 struct Location {
     x: usize,
@@ -205,7 +204,7 @@ fn part2solution(input: &str) -> i32 {
 }
 
 fn part2solution_speeed(input: &str) -> usize {
-    let mut guard = None;
+    let mut _guard = None;
     let mut map = vec![];
     for (line_number, line) in input.split_whitespace().enumerate() {
         let mut map_line = vec![];
@@ -214,7 +213,7 @@ fn part2solution_speeed(input: &str) -> usize {
                 '.' => Cell::EMPTY,
                 '#' => Cell::WALL,
                 '^' => {
-                    guard = Some(Guard {
+                    _guard = Some(Guard {
                         location: Location {
                             x: character_number,
                             y: line_number,
